@@ -1,0 +1,195 @@
+/* Estilos de la página educativa. Se carga DESPUÉS de globals.css (los estilos originales de la
+   calculadora siguen ahí) y solo redefine colores, tipografía y la estructura nueva. */
+
+:root {
+  --bg: #0a1222; --surf: #0f1a30; --surf2: #15264a; --line: #243656;
+  --ink: #e8eefb; --ink2: #a9b8d6; --ink3: #7f90b3;
+  --azul: #2a64f5; --cian: #22d3ee;
+  /* Series validadas para fondo oscuro y daltonismo; deben coincidir con lib/graficar.ts */
+  --s-ingresos: #05a0c4; --s-costos: #c9790a; --s-ganancia: #7b61ff;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  /* variables que usa globals.css */
+  --panel: var(--surf); --panel2: var(--surf2); --text: var(--ink); --muted: var(--ink2);
+  --accent: var(--cian); --accent2: var(--azul);
+}
+
+html { scroll-padding-top: 72px; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+body { background: var(--bg); color: var(--ink); font: 17px/1.65 var(--sans); }
+a { color: var(--cian); }
+:focus-visible { outline: 2px solid var(--cian); outline-offset: 2px; border-radius: 4px; }
+.muted { color: var(--ink2); }
+.tiny { color: var(--ink3); }
+
+.contenedor { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+.estrecho > * { max-width: 46rem; }
+
+.saltar { position: absolute; left: -9999px; top: 8px; background: var(--azul); color: #fff; padding: 8px 14px; border-radius: 8px; z-index: 60; }
+.saltar:focus { left: 12px; }
+
+/* Barra superior */
+.topbar { position: sticky; top: 0; z-index: 30; background: rgba(10, 18, 34, .92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.topbar-in { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 56px; }
+.marca { font-family: var(--serif); font-weight: 600; font-size: 1.05rem; color: var(--ink); text-decoration: none; white-space: nowrap; }
+.navsec { display: flex; gap: 2px; overflow-x: auto; scrollbar-width: none; }
+.navsec::-webkit-scrollbar { display: none; }
+.navsec a { padding: 8px 12px; border-radius: 8px; color: var(--ink2); text-decoration: none; font-size: .95rem; white-space: nowrap; }
+.navsec a:hover { color: var(--ink); background: var(--surf); }
+.navsec a.on { color: var(--cian); background: var(--surf2); }
+
+/* Portada */
+.portada { padding: 64px 0 56px; }
+.portada-in { display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: center; }
+.portada h1 { font-family: var(--serif); font-weight: 600; font-size: clamp(2.2rem, 5.4vw, 3.8rem); line-height: 1.06; letter-spacing: -.015em; margin: 0 0 20px; text-wrap: balance; }
+.lead { font-size: 1.15rem; color: var(--ink2); max-width: 34rem; margin: 0 0 28px; }
+.acciones { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn { display: inline-block; padding: 12px 20px; border-radius: 10px; font-weight: 600; text-decoration: none; }
+.btn-primario { background: var(--azul); color: #fff; }
+.btn-primario:hover { background: #3a72ff; }
+.btn-secundario { border: 1px solid var(--cian); color: var(--cian); }
+.btn-secundario:hover { background: var(--surf2); }
+.portada-fig { margin: 0; padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--surf); }
+.portada-fig figcaption { font-size: .9rem; color: var(--ink2); margin-top: 12px; }
+/* papel cuadriculado solo detrás de la curva */
+.curva-caja { border-radius: 8px; background-color: var(--bg);
+  background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 28px 28px; background-position: -1px -1px; }
+.curva { width: 100%; height: auto; display: block; }
+.svg-cero { stroke: var(--line); stroke-width: 1.5; }
+.svg-guia { stroke: var(--ink3); stroke-width: 1.5; stroke-dasharray: 3 5; }
+.svg-curva { stroke: var(--s-ganancia); stroke-width: 4; stroke-linejoin: round; }
+.svg-punto { fill: var(--s-ganancia); stroke: var(--surf); stroke-width: 3; }
+.svg-txt { fill: var(--ink2); font: 17px var(--sans); paint-order: stroke; stroke: var(--bg); stroke-width: 5px; stroke-linejoin: round; }
+.svg-dato { fill: var(--ink); font: 600 18px var(--sans); paint-order: stroke; stroke: var(--bg); stroke-width: 5px; stroke-linejoin: round; }
+
+/* Secciones */
+.seccion { padding: 72px 0; border-top: 1px solid var(--line); }
+.seccion h2 { font-family: var(--serif); font-weight: 600; font-size: clamp(1.7rem, 3.4vw, 2.3rem); line-height: 1.15; letter-spacing: -.01em; margin: 0 0 14px; }
+.seccion h3 { font-family: var(--serif); font-weight: 600; font-size: 1.25rem; margin: 0 0 8px; }
+.seccion h4 { font-size: .95rem; font-weight: 650; color: var(--ink2); margin: 0 0 4px; }
+.seccion p { margin: 0 0 14px; max-width: 46rem; }
+.intro { font-size: 1.08rem; color: var(--ink2); }
+.sub { margin-top: 44px !important; }
+.nota { color: var(--ink2); font-size: .95rem; border-top: 1px solid var(--line); padding-top: 14px; margin-top: 24px; }
+.aviso { border-left: 3px solid var(--azul); background: var(--surf); padding: 14px 18px; border-radius: 0 10px 10px 0; margin-top: 28px; }
+
+.herramientas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin: 20px 0; max-width: none; }
+.herramientas > div { border-top: 1px solid var(--line); padding-top: 12px; }
+.herramientas dt { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; margin-bottom: 4px; }
+.herramientas dd { margin: 0; color: var(--ink2); }
+.estrecho > .herramientas { max-width: none; }
+
+/* Funciones del modelo */
+.muestra { display: inline-block; width: 30px; height: 0; border-top: 3px solid var(--serie, var(--ink2)); vertical-align: middle; }
+.ingresos { --serie: var(--s-ingresos); }
+.costos { --serie: var(--s-costos); }
+.ganancia { --serie: var(--s-ganancia); }
+.costos .muestra { border-top-style: dashed; }
+.funcion { border-left: 3px solid var(--serie); padding: 4px 0 6px 22px; margin: 26px 0; }
+.costos.funcion { border-left-style: dashed; }
+.funcion-cab { display: flex; align-items: center; gap: 12px; }
+.funcion-cab h3 { margin: 0; }
+.funcion-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.funcion-cols p { margin: 6px 0 0; }
+.formula { max-width: 100%; overflow-x: auto; overflow-y: hidden; padding: 2px 0; }
+.formula .katex-display { margin: .5em 0; text-align: left; }
+.formula .katex-display > .katex { text-align: left; }
+.formula-inline .katex { font-size: 1.05em; }
+
+.grafica-caja { margin: 8px 0 20px; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--surf); }
+.plot-lg { height: 500px; }
+.plot-calc { height: 480px; }
+
+.valores, .signos { width: 100%; max-width: 46rem; border-collapse: collapse; margin: 8px 0 8px; font-variant-numeric: tabular-nums; }
+.valores caption, .signos caption { text-align: left; color: var(--ink2); font-size: .95rem; padding-bottom: 8px; }
+.valores th, .valores td, .signos th, .signos td { padding: 9px 12px; text-align: right; border-bottom: 1px solid var(--line); }
+.valores thead th, .signos thead th { font-weight: 650; border-bottom-width: 3px; }
+.valores tbody th { font-weight: 500; }
+.signos td, .signos th { text-align: left; }
+.c-ingresos { border-bottom-color: var(--s-ingresos) !important; }
+.c-costos { border-bottom-color: var(--s-costos) !important; border-bottom-style: dashed !important; }
+.c-ganancia { border-bottom-color: var(--s-ganancia) !important; }
+tr.optimo { background: var(--surf2); font-weight: 650; }
+
+.dos-col { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.acumulados { list-style: none; padding: 0; margin: 32px 0 8px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.acumulados li { border-top: 3px solid var(--serie); padding-top: 10px; }
+.acumulados li.costos { border-top-style: dashed; }
+.acumulados .formula { font-size: .98rem; }
+.acumulados p { font-size: .95rem; color: var(--ink2); margin-bottom: 12px; }
+
+/* Caso práctico */
+.pasos { list-style: none; counter-reset: paso; padding: 0; margin: 28px 0; }
+.pasos > li { counter-increment: paso; position: relative; margin-left: 16px; padding: 0 0 30px 44px; border-left: 1px solid var(--line); }
+.pasos > li:last-child { border-left-color: transparent; padding-bottom: 8px; }
+.pasos > li::before { content: counter(paso); position: absolute; left: -17px; top: -2px; width: 33px; height: 33px; border-radius: 50%; background: var(--bg); border: 1px solid var(--cian); color: var(--cian); display: grid; place-items: center; font-weight: 650; font-size: .95rem; }
+.pasos .formula { margin: 4px 0 10px; }
+.btn-calc, .chip-eco { background: transparent; color: var(--cian); border: 1px solid var(--line); border-radius: 8px; padding: 8px 14px; font: inherit; font-size: .9rem; cursor: pointer; }
+.btn-calc:hover, .chip-eco:hover { background: var(--surf2); border-color: var(--cian); }
+.resultado { border: 1px solid var(--line); background: var(--surf); border-radius: 14px; padding: 20px 22px; margin: 12px 0 32px; max-width: 46rem; }
+.ecuacion { display: flex; align-items: stretch; gap: 18px; flex-wrap: wrap; }
+.termino { flex: 1 1 150px; border-top: 3px solid var(--serie); padding-top: 10px; }
+.termino.costos { border-top-style: dashed; }
+.termino .etq { display: flex; align-items: center; gap: 8px; color: var(--ink2); font-size: .95rem; }
+.termino .etq .muestra { width: 22px; }
+.termino b { display: block; font-family: var(--serif); font-size: 2.1rem; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.op { align-self: center; font-size: 1.8rem; color: var(--ink2); }
+.conclusiones { padding-left: 1.2em; max-width: 46rem; }
+.conclusiones li { margin: 0 0 12px; }
+.pie { padding-top: 36px; padding-bottom: 8px; margin-top: 40px; border-top: 1px solid var(--line); color: var(--ink3); font-size: .9rem; }
+
+/* Calculadora (reutiliza las clases originales de globals.css) */
+.card { background: var(--surf); border: 1px solid var(--line); box-shadow: none; border-radius: 14px; margin: 16px 0; }
+.card h3 { margin-top: 0; }
+.inputrow input, .field, .rango input { background: var(--bg); border: 1px solid var(--line); color: var(--ink); }
+.inputrow input:focus, .field:focus, .rango input:focus { border-color: var(--cian); }
+.chip { background: var(--bg); border-color: var(--line); color: var(--ink2); }
+.chip:hover { border-color: var(--cian); color: var(--ink); }
+.ref, .historyItem { background: var(--bg); border-color: var(--line); }
+.calc .eco { border: 1px solid var(--line); border-radius: 14px; padding: 20px 22px; background: var(--surf); }
+.eco h3 { margin: 0 0 4px; }
+.eco p { margin-bottom: 8px; }
+.eco-lista { list-style: none; padding: 0; margin: 8px 0 12px; }
+.eco-lista li { display: grid; grid-template-columns: 230px minmax(0, 1fr) auto; gap: 12px 16px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+.eco-nombre { display: flex; align-items: center; gap: 10px; font-weight: 600; }
+.eco-nombre .muestra { width: 22px; flex: none; }
+.eco code { background: var(--bg); padding: 4px 8px; border-radius: 6px; font-size: .88rem; overflow-wrap: anywhere; color: var(--ink); }
+.eco-acciones, .eco-juntas { display: flex; gap: 8px; flex-wrap: wrap; }
+.eco-juntas { padding-top: 12px; border-top: 1px solid var(--line); }
+.trabajo { scroll-margin-top: 72px; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 28px 0 4px; }
+.tabs button { border: 1px solid var(--line); background: transparent; color: var(--ink2); padding: 10px 16px; border-radius: 10px; font: inherit; font-weight: 600; cursor: pointer; }
+.tabs button:hover { color: var(--ink); border-color: var(--ink3); }
+.tabs button.active { background: var(--azul); border-color: var(--azul); color: #fff; }
+.rango { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 14px; color: var(--ink2); font-size: .95rem; }
+.rango label { display: flex; align-items: center; gap: 8px; }
+.rango input { width: 110px; border-radius: 10px; padding: 9px 10px; font-size: 1rem; outline: none; }
+.ayuda { margin-top: 14px; color: var(--ink2); }
+.ayuda summary { cursor: pointer; color: var(--cian); }
+.ayuda table { border-collapse: collapse; margin-top: 8px; width: 100%; font-size: .93rem; }
+.ayuda td { padding: 6px 12px 6px 0; border-bottom: 1px solid var(--line); vertical-align: top; }
+.ayuda code { color: var(--ink); background: var(--bg); padding: 2px 6px; border-radius: 5px; }
+.result { overflow-wrap: anywhere; }
+
+@media (max-width: 900px) {
+  .portada-in { grid-template-columns: 1fr; gap: 32px; }
+  .herramientas, .acumulados, .dos-col { grid-template-columns: 1fr; gap: 20px; }
+  .eco-lista li { grid-template-columns: 1fr; }
+}
+@media (max-width: 700px) {
+  .marca { display: none; }
+  .navsec { margin: 0 -8px; }
+  .portada { padding: 40px 0 36px; }
+  .seccion { padding: 52px 0; }
+  .funcion-cols { grid-template-columns: 1fr; gap: 8px; }
+  .funcion { padding-left: 16px; }
+  .plot-lg, .plot-calc { height: 380px; }
+  .pasos > li { padding-left: 34px; margin-left: 12px; }
+  .op { display: none; }
+  .termino b { font-size: 1.8rem; }
+  .valores th, .valores td { padding: 8px 6px; font-size: .95rem; }
+}
+
+/* Móviles muy estrechos (≤ 359 px): fórmulas un poco más pequeñas para que las derivaciones quepan sin desplazarse. */
+@media (max-width: 359px) { .formula .katex-display > .katex { font-size: 1em; } }
